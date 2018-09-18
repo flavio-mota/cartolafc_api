@@ -6,7 +6,7 @@ CREATE TABLE cartola_fc.tb_partidas (
 	clube_visitante_id int not null,
 	clube_visitante_posicao int not null,
 	partida_data timestamp,
-	local varchar(20),
+	local varchar(50),
 	valida boolean,
 	placar_oficial_mandante int,
 	placar_oficial_visitante int,
