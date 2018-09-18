@@ -1,4 +1,4 @@
-CREATE TABLE aproveitamento (
+CREATE TABLE cartola_fc.tb_aproveitamento (
 	id_clube int not null,
 	id_rodada int not null,
 	id_partida int not null,
