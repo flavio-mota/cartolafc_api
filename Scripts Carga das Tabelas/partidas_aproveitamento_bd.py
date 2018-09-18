@@ -17,105 +17,65 @@ cur = conn.cursor()
 rowcount = cur.rowcount
 
 cur.execute("""TRUNCATE TABLE cartola_fc.tb_partidas CASCADE""")
-cur.execute("""TRUNCATE TABLE cartola_fc.tb_aproveitamento CASCADE""")
 
-for i in range(1, 39):
+url = "https://api.cartolafc.globo.com/partidas"
+try:
+    response = urllib.urlopen(url)
+    data = json.loads(response.read())
+    fim = data['rodada']
+except IOError as io:
+        print("cannot open")        
+
+for i in range(1, fim):
     url = "https://api.cartolafc.globo.com/partidas/"+str(i)
     try:
         response = urllib.urlopen(url)
         data = json.loads(response.read())
         print i
-        if 'mensagem' not in data:
+    
+        
+        """Carregando"""
+        for partida in data['partidas']:
             
-            """Carregando"""
-            for partida in data['partidas']:
-                
-                result_partida = []
-                result_mandante = []
-                result_visitante = []
-                
-                id_rodada = i
-                id_partida = partida['partida_id']
-                clube_casa_id = partida['clube_casa_id']
-                clube_casa_posicao = partida['clube_casa_posicao']           
-                clube_visitante_id = partida['clube_visitante_id']
-                clube_visitante_posicao = partida['clube_visitante_posicao']
-                partida_data = partida['partida_data']
-                local = partida['local']
-                valida = partida['valida']
-                placar_oficial_mandante = partida['placar_oficial_mandante']
-                placar_oficial_visitante = partida['placar_oficial_visitante']
-                url_confronto = partida['url_confronto']
-                url_transmissao = partida['url_transmissao']
-                
-                result_partida = [id_rodada,id_partida,clube_casa_id,
-                          clube_casa_posicao,clube_visitante_id,
-                          clube_visitante_posicao,partida_data,local,
-                          valida,placar_oficial_mandante,placar_oficial_visitante,
-                          url_confronto,url_transmissao]
-                """Carregando dados das partidas"""
-                cur.execute("""INSERT into cartola_fc.tb_partidas
-                       VALUES
-                       ( %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s
-                       )""",(result_partida))
-                conn.commit()
-                
-                ap0 = partida['aproveitamento_mandante'][0]
-                ap1 = partida['aproveitamento_mandante'][1]
-                ap2 = partida['aproveitamento_mandante'][2]
-                ap3 = partida['aproveitamento_mandante'][3]
-                ap4 = partida['aproveitamento_mandante'][4]
-                
-                result_mandante = [clube_casa_id, i, id_partida, ap0, ap1, ap2, ap3, ap4]
-                
-                """Carregando dados do aproveitamento do clube da casa"""
-                cur.execute("""INSERT into cartola_fc.tb_aproveitamento
-                       VALUES
-                       ( %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s
-                       )""",(result_mandante))
-                conn.commit()
-                
-                ap0 = partida['aproveitamento_visitante'][0]
-                ap1 = partida['aproveitamento_visitante'][1]
-                ap2 = partida['aproveitamento_visitante'][2]
-                ap3 = partida['aproveitamento_visitante'][3]
-                ap4 = partida['aproveitamento_visitante'][4]
-                
-                result_visitante = [clube_visitante_id, i, id_partida, ap0, ap1, ap2, ap3, ap4]
-                
-                """Carregando dados do aproveitamento do clube visitante"""
-                cur.execute("""INSERT into cartola_fc.tb_aproveitamento
-                       VALUES
-                       ( %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s,
-                         %s
-                       )""",(result_visitante))
-                conn.commit()
+            result_partida = []
             
+            id_rodada = i
+            id_partida = partida['partida_id']
+            clube_casa_id = partida['clube_casa_id']
+            clube_casa_posicao = partida['clube_casa_posicao']           
+            clube_visitante_id = partida['clube_visitante_id']
+            clube_visitante_posicao = partida['clube_visitante_posicao']
+            partida_data = partida['partida_data']
+            local = partida['local']
+            valida = partida['valida']
+            placar_oficial_mandante = partida['placar_oficial_mandante']
+            placar_oficial_visitante = partida['placar_oficial_visitante']
+            url_confronto = partida['url_confronto']
+            url_transmissao = partida['url_transmissao']
+            
+            result_partida = [id_rodada,id_partida,clube_casa_id,
+                      clube_casa_posicao,clube_visitante_id,
+                      clube_visitante_posicao,partida_data,local,
+                      valida,placar_oficial_mandante,placar_oficial_visitante,
+                      url_confronto,url_transmissao]
+            """Carregando dados das partidas"""
+            cur.execute("""INSERT into cartola_fc.tb_partidas
+                   VALUES
+                   ( %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s,
+                     %s
+                   )""",(result_partida))
+            conn.commit()
             
     except IOError as io:
         print("cannot open")
