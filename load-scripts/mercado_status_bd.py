@@ -7,7 +7,7 @@ Created on Mon Sep 17 19:26:16 2018
 """
 
 
-import urllib
+import requests
 import psycopg2
 import json
 from datetime import date
@@ -20,9 +20,10 @@ rowcount = cur.rowcount
 
 url = "https://api.cartolafc.globo.com/mercado/status"
 try:
-    response = urllib.urlopen(url)
-    data = json.loads(response.read())
-    print data
+    #response = urllib.urlopen(url)
+    #data = json.loads(response.read())
+    #print data
+    data = requests.get(url).json()
     cur.execute("""TRUNCATE TABLE cartola_fc.tb_mercado_status""")
 
     result = []

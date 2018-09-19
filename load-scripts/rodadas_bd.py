@@ -6,7 +6,7 @@ Created on Mon Sep 17 21:15:23 2018
 @author: flaviomota
 """
 
-import urllib
+import requests
 import psycopg2
 import json
 
@@ -18,9 +18,8 @@ rowcount = cur.rowcount
 
 url = "https://api.cartolafc.globo.com/rodadas"
 try:
-    response = urllib.urlopen(url)
-    data = json.loads(response.read())
-    cur.execute("""TRUNCATE TABLE cartola_fc.tb_rodadas""")
+    data = requests.get(url).json()
+    cur.execute("""TRUNCATE TABLE cartola_fc.tb_rodadas CASCADE""")
     for item in data:
         result = []
         

@@ -15,4 +15,4 @@ CREATE TABLE cartola_fc.tb_prox_partida (
 	primary key (id_partida),
 	foreign key (clube_casa_id) references cartola_fc.tb_clubes (id_clube),
 	foreign key (clube_visitante_id) references cartola_fc.tb_clubes (id_clube)
-)
+);

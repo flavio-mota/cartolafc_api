@@ -6,7 +6,7 @@ Created on Tue Sep 18 19:43:07 2018
 @author: flaviomota
 """
 
-import urllib
+import requests
 import psycopg2
 import json
 
@@ -21,8 +21,7 @@ cur.execute("""TRUNCATE TABLE cartola_fc.tb_aproveitamento CASCADE""")
 
 url = "https://api.cartolafc.globo.com/partidas"
 try:
-    response = urllib.urlopen(url)
-    data = json.loads(response.read())
+    data = requests.get(url).json()
         
     """Carregando"""
     for partida in data['partidas']:

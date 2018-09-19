@@ -6,7 +6,7 @@ Created on Tue Sep 18 16:02:39 2018
 @author: flaviomota
 """
 
-import urllib
+import requests
 import psycopg2
 import json
 
@@ -20,8 +20,7 @@ cur.execute("""TRUNCATE TABLE cartola_fc.tb_partidas CASCADE""")
 
 url = "https://api.cartolafc.globo.com/partidas"
 try:
-    response = urllib.urlopen(url)
-    data = json.loads(response.read())
+    data = requests.get(url).json()
     fim = data['rodada']
 except IOError as io:
         print("cannot open")        
@@ -29,9 +28,8 @@ except IOError as io:
 for i in range(1, fim):
     url = "https://api.cartolafc.globo.com/partidas/"+str(i)
     try:
-        response = urllib.urlopen(url)
-        data = json.loads(response.read())
-        print i
+        data = requests.get(url).json()
+        #print i
     
         
         """Carregando"""
