@@ -1,4 +1,4 @@
-# project name
+# Carga de dados utilizando a API do Cartola FC
 
 ## Requisitos
 
