@@ -12,7 +12,7 @@ import json
 
 conn = psycopg2.connect(host="localhost", database="cartola_fc", 
 user="postgres", password="postgres")
-print("Database Connected")
+print("Conectado ao banco")
 cur = conn.cursor()
 rowcount = cur.rowcount
 
@@ -23,8 +23,9 @@ try:
     data = requests.get(url).json()
     fim = data['rodada']
 except IOError as io:
-        print("cannot open")        
+        print("Erro")        
 
+print("Carregando os dados das partidas - - - - - Aguarde")
 for i in range(1, fim):
     url = "https://api.cartolafc.globo.com/partidas/"+str(i)
     try:
@@ -77,4 +78,5 @@ for i in range(1, fim):
             
     except IOError as io:
         print("cannot open")
-            
+cur.close()
+print("Sucesso! Inicializando próxima carga....")            

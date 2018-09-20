@@ -13,7 +13,6 @@ CREATE TABLE cartola_fc.tb_atletas (
 	variacao_num float,
 	media_num float,
 	jogos_num int,
-	scout text,
 	foreign key (rodada_id) references cartola_fc.tb_rodadas,
 	foreign key (clube_id) references cartola_fc.tb_clubes,
 	foreign key (posicao_id) references cartola_fc.tb_posicoes_atleta,

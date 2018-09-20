@@ -12,7 +12,7 @@ import json
 
 conn = psycopg2.connect(host="localhost", database="cartola_fc", 
 user="postgres", password="postgres")
-print("Database Connected")
+print("Conectado ao banco")
 cur = conn.cursor()
 rowcount = cur.rowcount
 
@@ -24,7 +24,7 @@ try:
     cur.execute("""TRUNCATE TABLE cartola_fc.tb_status_atleta CASCADE""")
     cur.execute("""TRUNCATE TABLE cartola_fc.tb_atletas""")
     
-    """Carregando as posiçoes dos atletas"""
+    print("Carregando os dados das posições dos atletas - - - - - Aguarde")
     for posicao in data['posicoes']:
         result = []
         
@@ -41,7 +41,7 @@ try:
                        )""",(result))
         conn.commit()
     
-    """Carregando os status dos atletas"""
+    print("Carregando os dados dos status dos atletas - - - - - Aguarde")
     for status in data['status']:
         result = []
         
@@ -56,7 +56,9 @@ try:
                        )""",(result))
         conn.commit()
     
-    """Carregando os atletas"""
+    print("Carregando as informações dos atletas")
+    print("!!!!!Essa operação pode ser demorada!!!!!")
+    print("Aguarde")
     for atleta in data['atletas']:
         result = []
         
@@ -74,11 +76,79 @@ try:
         variacao_num = atleta['variacao_num']
         media_num = atleta['media_num']
         jogos_num = atleta['jogos_num']
-        scout = atleta['scout']
-        
+                
         result = [atleta_id, nome, slug, apelido, foto, rodada_id, clube_id, posicao_id,
-                  status_id, pontos_num, preco_num, variacao_num, media_num, jogos_num, scout]
+                  status_id, pontos_num, preco_num, variacao_num, media_num, jogos_num]
         cur.execute("""INSERT into cartola_fc.tb_atletas
+                       VALUES
+                       ( %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s,
+                         %s
+                       )""",(result))
+        conn.commit()
+        
+        
+        ca = None 
+        fc = None
+        ff = None
+        fs = None
+        ft = None
+        g = None
+        pe = None
+        rb = None
+        a = None
+        i = None
+        cv = None
+        sg = None
+        gs = None
+        dd = None
+      
+        result_scout = []
+      
+        if 'CA' in atleta['scout']:
+            ca = atleta['scout']['CA']
+        if 'FC' in atleta['scout']:
+            fc = atleta['scout']['FC']
+        if 'FF' in atleta['scout']:
+            ff = atleta['scout']['FF']
+        if 'FS' in atleta['scout']:
+            fs = atleta['scout']['FS']
+        if 'FT' in atleta['scout']:
+            ft = atleta['scout']['FT']
+        if 'G' in atleta['scout']:
+            g = atleta['scout']['G']
+        if 'PE' in atleta['scout']:
+            pe = atleta['scout']['PE']
+        if 'RB' in atleta['scout']:
+            rb = atleta['scout']['RB']
+        if 'A' in atleta['scout']:
+            a = atleta['scout']['A']
+        if 'I' in atleta['scout']:
+            i = atleta['scout']['I']
+        if 'CV' in atleta['scout']:
+            cv = atleta['scout']['CV']
+        if 'SG' in atleta['scout']:
+            sg = atleta['scout']['SG']
+        if 'GS' in atleta['scout']:
+            gs = atleta['scout']['GS']
+        if 'DD' in atleta['scout']:
+            dd = atleta['scout']['DD']
+        
+        result_scout = [atleta_id, ca, fc, ff, fs, ft, g, pe, rb, a, i, cv, sg,
+                        gs, dd]
+        
+        cur.execute("""INSERT into cartola_fc.tb_scout
                        VALUES
                        ( %s,
                          %s,
@@ -95,9 +165,10 @@ try:
                          %s,
                          %s,
                          %s
-                       )""",(result))
+                       )""",(result_scout))
         conn.commit()
     
     cur.close()
+    print("Sucesso! Inicializando próxima carga....")
 except IOError as io:
-    print("cannot open")
+    print("Erro")

@@ -7,22 +7,29 @@ Instalar o virtualenv
 ```bash
 apt-get install virtualenv
 ```
+Criar o banco de dados 'cartola_fc', o esquema 'cartola_fc' e dentro do esquema as tabelas presentes nos scripts de criação
 
 ## Construir
 
-Criar virtualenv e instala as dependências.
+Rode o seguinte comando para criar o virtualenv e instalar as dependências.
 
 ```bash
-make create
+make install
 ```
 
 ## Executar
 
-Executa a simulação X.
+Rode o seguinte comando para criar executar a as cargas sequêncialmente.
 
 ```bash
 make run
 ```
 
+## Limpar
 
+Rode o seguinte comando se deseja limpar o virtualenv
+
+```bash
+make clean
+```
 

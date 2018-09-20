@@ -12,16 +12,17 @@ import json
 
 conn = psycopg2.connect(host="localhost", database="cartola_fc", 
 user="postgres", password="postgres")
-print("Database Connected")
+print("Conectado ao banco")
 cur = conn.cursor()
 rowcount = cur.rowcount
 
 url = "https://api.cartolafc.globo.com/clubes"
 try:
-    # response = urllib.urlopen(url)
-    # data = json.loads(response.read())
+    
     data = requests.get(url).json()
     cur.execute("""TRUNCATE TABLE cartola_fc.tb_clubes CASCADE""")
+
+    print("Carregando dados dos clubes - - - - - Aguarde")
     for item in data:
         result = []
         
@@ -48,5 +49,6 @@ try:
                        )""",(result))
         conn.commit()
     cur.close()
+    print("Sucesso! Inicializando próxima carga....")
 except IOError as io:
-    print("cannot open")
+    print("Erro")
