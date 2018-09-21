@@ -22,7 +22,7 @@ try:
     
     cur.execute("""TRUNCATE TABLE cartola_fc.tb_posicoes_atleta CASCADE""")
     cur.execute("""TRUNCATE TABLE cartola_fc.tb_status_atleta CASCADE""")
-    cur.execute("""TRUNCATE TABLE cartola_fc.tb_atletas""")
+    cur.execute("""TRUNCATE TABLE cartola_fc.tb_atletas CASCADE""")
     
     print("Carregando os dados das posições dos atletas - - - - - Aguarde")
     for posicao in data['posicoes']:

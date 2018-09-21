@@ -5,7 +5,7 @@
 Instalar o virtualenv
 
 ```bash
-apt-get install virtualenv
+sudo apt-get install virtualenv
 ```
 Criar o banco de dados 'cartola_fc', o esquema 'cartola_fc' e dentro do esquema as tabelas presentes nos scripts de criação
 
