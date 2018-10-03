@@ -1,5 +1,6 @@
 CREATE TABLE cartola_fc.tb_scout (
 	id_atleta int not null,
+	id_rodada int not null,
 	CA int,
 	FC int,
 	FF int,
@@ -14,5 +15,7 @@ CREATE TABLE cartola_fc.tb_scout (
 	SG int,
 	GS int,
 	DD int,
-	foreign key (id_atleta) references cartola_fc.tb_atletas (atleta_id)
+	primary key (id_atleta, id_rodada, id_partida),
+	foreign key (id_atleta) references cartola_fc.tb_atletas (atleta_id),
+	foreign key (id_rodada) references cartola_fc.tb_rodadas (rodada_id)
 );
