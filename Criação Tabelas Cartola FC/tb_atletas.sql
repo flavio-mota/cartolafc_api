@@ -6,8 +6,6 @@ CREATE TABLE cartola_fc.tb_atletas (
 	foto text,
 	clube_id int not null,
 	posicao_id int not null,
-	foreign key (rodada_id) references cartola_fc.tb_rodadas,
-	foreign key (clube_id) references cartola_fc.tb_clubes,
-	foreign key (posicao_id) references cartola_fc.tb_posicoes_atleta,
-	foreign key (status_id) references cartola_fc.tb_status_atleta
+	foreign key (clube_id) references cartola_fc.tb_clubes(id_clube),
+	foreign key (posicao_id) references cartola_fc.tb_posicoes_atleta(id),
 );
