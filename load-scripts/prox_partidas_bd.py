@@ -1,14 +1,5 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Sep 18 19:43:07 2018
-
-@author: flaviomota
-"""
-
 import requests
 import psycopg2
-import json
 
 conn = psycopg2.connect(host="localhost", database="cartola_fc", 
 user="postgres", password="postgres")
@@ -17,7 +8,6 @@ cur = conn.cursor()
 rowcount = cur.rowcount
 
 cur.execute("""TRUNCATE TABLE cartola_fc.tb_prox_partida CASCADE""")
-cur.execute("""TRUNCATE TABLE cartola_fc.tb_aproveitamento CASCADE""")
 
 url = "https://api.cartolafc.globo.com/partidas"
 try:
@@ -66,48 +56,6 @@ try:
                  %s,
                  %s
                )""",(result_partida))
-        conn.commit()
-        
-        ap0 = partida['aproveitamento_mandante'][0]
-        ap1 = partida['aproveitamento_mandante'][1]
-        ap2 = partida['aproveitamento_mandante'][2]
-        ap3 = partida['aproveitamento_mandante'][3]
-        ap4 = partida['aproveitamento_mandante'][4]
-        
-        result_mandante = [clube_casa_id, id_rodada, ap0, ap1, ap2, ap3, ap4]
-        
-        """Carregando dados do aproveitamento do clube da casa"""
-        cur.execute("""INSERT into cartola_fc.tb_aproveitamento
-               VALUES
-               ( %s,
-                 %s,
-                 %s,
-                 %s,
-                 %s,
-                 %s,
-                 %s
-               )""",(result_mandante))
-        conn.commit()
-        
-        ap0 = partida['aproveitamento_visitante'][0]
-        ap1 = partida['aproveitamento_visitante'][1]
-        ap2 = partida['aproveitamento_visitante'][2]
-        ap3 = partida['aproveitamento_visitante'][3]
-        ap4 = partida['aproveitamento_visitante'][4]
-        
-        result_visitante = [clube_visitante_id, id_rodada, ap0, ap1, ap2, ap3, ap4]
-        
-        """Carregando dados do aproveitamento do clube visitante"""
-        cur.execute("""INSERT into cartola_fc.tb_aproveitamento
-               VALUES
-               ( %s,
-                 %s,
-                 %s,
-                 %s,
-                 %s,
-                 %s,
-                 %s
-               )""",(result_visitante))
         conn.commit()
     
     cur.close()

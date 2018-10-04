@@ -8,7 +8,6 @@ Created on Mon Sep 17 21:34:04 2018
 
 import requests
 import psycopg2
-import json
 
 conn = psycopg2.connect(host="localhost", database="cartola_fc", 
 user="postgres", password="postgres")
@@ -20,7 +19,6 @@ url = "https://api.cartolafc.globo.com/clubes"
 try:
     
     data = requests.get(url).json()
-    cur.execute("""TRUNCATE TABLE cartola_fc.tb_clubes CASCADE""")
 
     print("Carregando dados dos clubes - - - - - Aguarde")
     for item in data:

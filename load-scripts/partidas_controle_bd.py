@@ -1,14 +1,6 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Sep 18 16:02:39 2018
-
-@author: flaviomota
-"""
-
 import requests
 import psycopg2
-import json
+import datetime
 
 conn = psycopg2.connect(host="localhost", database="cartola_fc", 
 user="postgres", password="postgres")
@@ -16,22 +8,22 @@ print("Conectado ao banco")
 cur = conn.cursor()
 rowcount = cur.rowcount
 
-cur.execute("""TRUNCATE TABLE cartola_fc.tb_partidas CASCADE""")
+cur.execute("""SELECT count(id_carga) FROM cartola_fc.tb_controle""")        
+ctr = cur.fetchone()
+ctr = ctr[0]
+print("Carregando os dados das partidas - - - - - Aguarde")
 
 url = "https://api.cartolafc.globo.com/partidas"
 try:
     data = requests.get(url).json()
     fim = data['rodada']
 except IOError as io:
-        print("Erro")        
+        print("Erro")
 
-print("Carregando os dados das partidas - - - - - Aguarde")
-for i in range(1, fim):
+for i in range(ctr+1, fim):
     url = "https://api.cartolafc.globo.com/partidas/"+str(i)
     try:
         data = requests.get(url).json()
-        #print i
-    
         
         """Carregando"""
         for partida in data['partidas']:
@@ -76,7 +68,19 @@ for i in range(1, fim):
                    )""",(result_partida))
             conn.commit()
             
+        result_controle = []
+        id_carga = i
+        data_carga = datetime.datetime.now()
+            
+        result_controle = [id_carga, data_carga]
+            
+        cur.execute("""INSERT into cartola_fc.tb_controle
+                        VALUES
+                        (%s,
+                        %s
+                        )""", result_controle)
+        conn.commit()
+    
     except IOError as io:
         print("cannot open")
 cur.close()
-print("Sucesso! Inicializando próxima carga....")            
