@@ -1,11 +1,3 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 17 21:34:04 2018
-
-@author: flaviomota
-"""
-
 import requests
 import psycopg2
 
