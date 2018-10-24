@@ -21,4 +21,4 @@ run-inicial:
 
 run:
 	@echo -e "\e[32mCarregando dados...\e[0m"
-	@. venv/bin/activate && python load-scripts/rodadas_bd.py && python load-scripts/status_rodada_bd.py && python load-scripts/mercado_destaques_bd.py && python load-scripts/aproveitamentos_bd.py && python load-scripts/prox_partidas_bd.py && python load-scripts/scouts_bd.py && python load-scripts/partidas_controle_bd.py
+	@. venv/bin/activate && python load-scripts/rodadas_bd.py && python load-scripts/status_rodada_bd.py && python load-scripts/mercado_destaques_bd.py && python load-scripts/aproveitamentos_bd.py && python load-scripts/prox_partidas_bd.py && python load-scripts/scouts_bd.py && python load-scripts/pontuados_bd.py && python load-scripts/partidas_controle_bd.py
