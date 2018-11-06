@@ -14,23 +14,23 @@ try:
     d = requests.get(url).json()
 
     print("Carregando as pontuações dos atletas - - - - - Aguarde")
-	for atleta in d['atletas']:
-	    result = []
-	    
-	    rodada_id = d['rodada']
-	    atleta_id = atleta
-	    pontuacao = d['atletas'][atleta]['pontuacao']
-	    result = [atleta_id, rodada_id, pontuacao]
+    for atleta in d['atletas']:
+        result = []
+        
+        rodada_id = d['rodada']
+        atleta_id = atleta
+        pontuacao = d['atletas'][atleta]['pontuacao']
+        result = [atleta_id, rodada_id, pontuacao]
 
-	    cur.execute("""INSERT into cartola_fc.tb_pontuacao 
-	                   VALUES
-	                   ( %s,
-	                     %s,
-	                     %s
-	                   )""",(result))
-	    conn.commit()
-	cur.close()
-	print("Sucesso! Inicializando próxima carga....")
-	
+        cur.execute("""INSERT into cartola_fc.tb_pontuacao 
+                      VALUES
+                       ( %s,
+                         %s,
+                         %s
+                       )""",(result))
+        conn.commit()
+    cur.close()
+    print("Sucesso! Inicializando próxima carga....")
+
 except IOError as io:
     print("Erro")

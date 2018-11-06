@@ -11,6 +11,7 @@ rowcount = cur.rowcount
 cur.execute("""SELECT count(id_carga) FROM cartola_fc.tb_controle""")        
 ctr = cur.fetchone()
 ctr = ctr[0]
+conn.commit()
 print("Carregando os dados das partidas - - - - - Aguarde")
 
 url = "https://api.cartolafc.globo.com/partidas"
@@ -20,7 +21,7 @@ try:
 except IOError as io:
         print("Erro")
 
-for i in range(ctr+1, fim):
+for i in range(ctr+1, fim+1):
     url = "https://api.cartolafc.globo.com/partidas/"+str(i)
     try:
         data = requests.get(url).json()

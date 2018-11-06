@@ -7,8 +7,6 @@ print("Conectado ao banco")
 cur = conn.cursor()
 rowcount = cur.rowcount
 
-cur.execute("""TRUNCATE TABLE cartola_fc.tb_prox_partida CASCADE""")
-
 url = "https://api.cartolafc.globo.com/partidas"
 try:
     data = requests.get(url).json()
